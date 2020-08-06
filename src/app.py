@@ -11,17 +11,14 @@ def lambda_handler(event, context):
     '''
 
     dynamodb = boto3.client('dynamodb')
+    ddTableName=os.environ['databaseName']
+    table = dynamodb.Table(ddTableName)
 
-    response = dynamodb.update_item(
-        TableName=os.environ['databaseName'],
-        Key={
-            'id': {'S': "bansimendapara.com"}
-        },
-        UpdateExpression='ADD visitors :inc',
-        ExpressionAttributeValues={
-            ':inc': {'N': '1'}
-        },
-        ReturnValues="UPDATED_NEW"
+    response = table.update_item(
+        Key={"page": "BansiResume"},
+        UpdateExpression="ADD NumOfViews :inc",
+        ExpressionAttributeValues={":inc": 1},
+        ReturnValues="UPDATED_NEW",
     )
 
     return {
@@ -31,5 +28,5 @@ def lambda_handler(event, context):
             'Access-Control-Allow-Origin': '*',
             'Access-Control-Allow-Methods': 'OPTIONS,POST,GET'
         },
-        "body": json.dumps({"visitorCount": int(response['Attributes']['visitors']['N'])})
+        "body": json.dumps({"visitorCount": int(response["Attributes"]["NumOfViews"])})
     }
