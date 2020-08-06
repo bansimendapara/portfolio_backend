@@ -15,7 +15,7 @@ def lambda_handler(event, context):
     table = dynamodb.Table(ddTableName)
 
     response = table.update_item(
-        Key={"page": "BansiResume"},
+        Key={"id": "BansiResume"},
         UpdateExpression="ADD NumOfViews :inc",
         ExpressionAttributeValues={":inc": 1},
         ReturnValues="UPDATED_NEW",
