@@ -3,4 +3,4 @@
  region = "us-east-1"
  stack_name = "my-portfolio"
  capabilities = "CAPABILITY_IAM"
- s3_bucket = "my-source-bucket-3316"
+ s3_bucket = "bansi3316"
