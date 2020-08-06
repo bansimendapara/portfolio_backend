@@ -1,0 +1,60 @@
+AWSTemplateFormatVersion: "2010-09-09"
+Transform: AWS::Serverless-2016-10-31
+Description: Returns the visitors counter for my resume/portfolio webpage
+
+Resources:
+  VisitorsCounterTable:
+    Type: AWS::Serverless::SimpleTable
+    Properties:
+      PrimaryKey:
+        Name: id
+        Type: String
+
+  VisitorsCounterFunction:
+    Type: AWS::Serverless::Function
+    Properties:
+      CodeUri: visitors_counter/
+      Handler: app.lambda_handler
+      Runtime: python3.8
+      Role: !GetAtt LambdaFunctionRole.Arn
+      Environment:
+        Variables:
+          databaseName: !Ref VisitorsCounterTable
+      Events:
+        RandoEventName:
+          Type: Api
+          Properties:
+            Path: /
+            Method: post
+
+  LambdaFunctionRole:
+    Type: AWS::IAM::Role
+    Properties:
+      AssumeRolePolicyDocument:
+        Version: "2012-10-17"
+        Statement:
+          - Effect: Allow
+            Principal:
+              Service:
+                - lambda.amazonaws.com
+            Action:
+              - sts:AssumeRole
+      Path: "/"
+      Policies:
+        - PolicyName: dynamodbAccessRole
+          PolicyDocument:
+            Version: "2012-10-17"
+            Statement:
+              - Effect: Allow
+                Action:
+                  - dynamodb:UpdateItem
+                Resource: !Sub "arn:aws:dynamodb:${AWS::Region}:${AWS::AccountId}:table/${VisitorsCounterTable}"
+              - Effect: Allow
+                Action:
+                  - logs:*
+                Resource: "*"
+
+Outputs:
+  VisitorsCounterApi:
+    Description: "API Gateway endpoint URL for Prod stage for Hello World function"
+    Value: !Sub "https://${ServerlessRestApi}.execute-api.${AWS::Region}.amazonaws.com/Prod/"
