@@ -11,22 +11,31 @@ def lambda_handler(event, context):
     '''
 
     dynamodb = boto3.client('dynamodb')
-    ddTableName=os.environ['databaseName']
-    table = dynamodb.Table(ddTableName)
+    TableName=os.environ['databaseName']
+    table = dynamodb.Table(TableName)
 
-    response = table.update_item(
+    ddResponse = table.update_item(
         Key={"id": "BansiResume"},
         UpdateExpression="ADD NumOfViews :inc",
         ExpressionAttributeValues={":inc": 1},
         ReturnValues="UPDATED_NEW",
     )
 
-    return {
+    # Format dynamodb response into variable visitorCount
+    responseBody = json.dumps(
+        {"visitorCount": int(float(ddResponse["Attributes"]["NumOfViews"]))}
+    )
+
+    # Create api response object
+    apiResponse = {
+        "isBase64Encoded": False,
         "statusCode": 200,
-        'headers': {
-            'Access-Control-Allow-Headers': 'Content-Type',
-            'Access-Control-Allow-Origin': '*',
-            'Access-Control-Allow-Methods': 'OPTIONS,POST,GET'
+        "body": responseBody,
+        "headers": {
+            "Access-Control-Allow-Headers": "Content-Type,X-Amz-Date,Authorization,X-Api-Key,x-requested-with",
+            "Access-Control-Allow-Origin": "*",
+            "Access-Control-Allow-Methods": "GET,OPTIONS",
         },
-        "body": json.dumps({"visitorCount": int(response["Attributes"]["NumOfViews"])})
     }
+
+    return apiResponse
