@@ -25,7 +25,7 @@ Resources:
           Type: Api
           Properties:
             Path: /
-            Method: post
+            Method: get
 
   LambdaFunctionRole:
     Type: AWS::IAM::Role
