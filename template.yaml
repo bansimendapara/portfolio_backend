@@ -24,7 +24,7 @@ Resources:
         RandoEventName:
           Type: Api
           Properties:
-            Path: /
+            Path: /visitor-count
             Method: get
 
   LambdaFunctionRole:
@@ -57,4 +57,4 @@ Resources:
 Outputs:
   VisitorsCounterApi:
     Description: "API Gateway endpoint URL for Prod stage for Hello World function"
-    Value: !Sub "https://${ServerlessRestApi}.execute-api.${AWS::Region}.amazonaws.com/Prod/"
+    Value: !Sub "https://${ServerlessRestApi}.execute-api.${AWS::Region}.amazonaws.com/Prod/visitor-count/"
