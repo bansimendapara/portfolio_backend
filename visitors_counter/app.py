@@ -15,7 +15,7 @@ def lambda_handler(event, context):
     ddResponse = dynamodb.update_item(
         TableName=os.environ['databaseName'],
         Key={
-            'id': {'S': "BansiResume"}
+            'id': {'S': "bansimendapara.com"}
         },
         UpdateExpression='ADD visitors :inc',
         ExpressionAttributeValues={
