@@ -11,10 +11,9 @@ def lambda_handler(event, context):
     '''
 
     dynamodb = boto3.client('dynamodb')
-    ddTableName=os.environ['databaseName']
-    table = dynamodb.Table(ddTableName)
 
-    ddResponse = table.update_item(
+    ddResponse = dynamodb.update_item(
+        TableName=os.environ['databaseName'],
         Key={
             'id': {'S': "bansimendapara.com"}
         },
