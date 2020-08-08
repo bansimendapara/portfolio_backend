@@ -29,14 +29,12 @@ Resources:
           Properties:
             Path: /visitor-count
             Method: get
-            RestApiId: 
-              Ref: MyApi
   
   ServerlessRestApiUsagePlan:
     Type: AWS::ApiGateway::UsagePlan
     Properties:
       ApiStages:
-        - ApiId: !Ref MyApi
+        - ApiId: !Sub ${ServerlessRestApi}
           Stage: Prod
       Description: Usage plan of visitor counter API
       Throttle:
