@@ -29,18 +29,6 @@ Resources:
           Properties:
             Path: /visitor-count
             Method: get
-  
-  ServerlessRestApiUsagePlan:
-    Type: AWS::ApiGateway::UsagePlan
-    Properties:
-      ApiStages:
-        - ApiId: !Sub ${ServerlessRestApi}
-          Stage: Prod
-      Description: Usage plan of visitor counter API
-      Throttle:
-        BurstLimit: 100
-        RateLimit: 50
-      UsagePlanName: VisitorCounterLimiter
 
   LambdaFunctionRole:
     Type: AWS::IAM::Role
