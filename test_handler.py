@@ -48,9 +48,9 @@ def test_handler():
 
         # Check that it exists in `processed/`
         assert response['statusCode'] == 200
-        assert response['body'] == json.dumps({"visitorCount": 1})
+        assert response['body'] == json.dumps({"visitorCount": 5})
 
         response = app.lambda_handler(None, None)
 
         assert response['statusCode'] == 200
-        assert response['body'] == json.dumps({"visitorCount": 2})
+        assert response['body'] == json.dumps({"visitorCount": 10})
