@@ -19,7 +19,7 @@ def lambda_handler(event, context):
         },
         UpdateExpression='ADD visitors :inc',
         ExpressionAttributeValues={
-            ':inc': {'N': '5'}
+            ':inc': {'N': '1'}
         },
         ReturnValues="UPDATED_NEW"
     )
