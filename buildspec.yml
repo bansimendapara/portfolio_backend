@@ -8,9 +8,9 @@ phases:
   build:
     commands:
       - pytest test_handler.py
-  #     - sam build
-  #     - echo "Testing Successful"
-  # post_build:
-  #   commands:
-  #     - sam deploy
-  #     - echo "Deployment Successful"
+      - sam build
+      - echo "Testing Successful"
+  post_build:
+    commands:
+      - sam deploy
+      - echo "Deployment Successful"
