@@ -1,0 +1,16 @@
+version: 0.2
+
+phases:
+  install:
+    commands:
+      - pip install -r ./visitors_counter/requirements.txt
+      - echo "Requirements Installation Successful"
+  build:
+    commands:
+      - pytest test_handler.py
+      - sam build
+      - echo "Testing Successful"
+  post_build:
+    commands:
+      - sam deploy
+      - echo "Deployment Successful"
