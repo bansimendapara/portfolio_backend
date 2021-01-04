@@ -53,4 +53,4 @@ def test_handler():
         response = app.lambda_handler(None, None)
 
         assert response['statusCode'] == 200
-        assert response['body'] == json.dumps({"visitorCount": 5})
+        assert response['body'] == json.dumps({"visitorCount": 6})
